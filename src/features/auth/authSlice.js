@@ -1,14 +1,14 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { createUser,checkUser } from './authAPI';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createUser, checkUser } from "./authAPI";
 
 const initialState = {
   loggedInUser: null,
-  status: 'idle',
-  error:null
+  status: "idle",
+  error: null,
 };
 
 export const createUserAsync = createAsyncThunk(
-  'user/createUser',
+  "auth/createUser",
   async (userdata) => {
     const response = await createUser(userdata);
     return response.data;
@@ -16,7 +16,7 @@ export const createUserAsync = createAsyncThunk(
 );
 
 export const checkUserAsync = createAsyncThunk(
-  'user/checkUser',
+  "auth/checkUser",
   async (loginInfo) => {
     const response = await checkUser(loginInfo);
     return response.data;
@@ -24,37 +24,32 @@ export const checkUserAsync = createAsyncThunk(
 );
 
 export const authSlice = createSlice({
-  name: 'user',
+  name: "auth",
   initialState,
-  reducers: {
-    increment: (state) => {
-      state.value += 1;
-    }
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(createUserAsync.pending, (state) => {
-        state.status = 'loading';
+        state.status = "loading";
       })
       .addCase(createUserAsync.fulfilled, (state, action) => {
-        state.status = 'idle';
-        state.loggedInUser += action.payload;
+        state.status = "idle";
+        state.loggedInUser = action.payload;
       })
       .addCase(checkUserAsync.pending, (state) => {
-        state.status = 'loading';
+        state.status = "loading";
       })
       .addCase(checkUserAsync.fulfilled, (state, action) => {
-        state.status = 'idle';
-        state.loggedInUser += action.payload;
+        state.status = "idle";
+        state.loggedInUser = action.payload;
       })
       .addCase(checkUserAsync.rejected, (state, action) => {
-        state.status = 'idle';
+        state.status = "idle";
         state.error = action.error;
       });
   },
 });
 
-export const { increment } = authSlice.actions;
-export const selectLoggedInUser =(state)=> state.auth.loggedInUser;
-export const selectError =(state)=> state.auth.error;
+export const selectLoggedInUser = (state) => state.auth.loggedInUser;
+export const selectError = (state) => state.auth.error;
 export default authSlice.reducer;

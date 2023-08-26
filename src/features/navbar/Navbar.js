@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
-import StarkMart from '../../Images/Icon.png'
+import StarkMart from "../../Images/Icon.png";
+import { selectItems } from "../Cart/cartSlice";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Link } from "react-router-dom";
 import {
@@ -7,6 +8,7 @@ import {
   ShoppingCartIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
+import { useSelector } from "react-redux";
 
 const user = {
   name: "Tom Cook",
@@ -27,9 +29,11 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 const Navbar = ({ children }) => {
+  const items = useSelector(selectItems);
+
+  console.log(items);
   return (
     <div className="min-h-full">
-        
       <Disclosure as="nav" className="bg-gray-800">
         {({ open }) => (
           <>
@@ -65,21 +69,23 @@ const Navbar = ({ children }) => {
                 </div>
                 <div className="hidden md:block">
                   <div className="ml-4 flex items-center md:ml-6">
-                    <Link to='/cart'>
-                    <button
-                      type="button"
-                      className=" rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                    >
-                      <span className="sr-only">View notifications</span>
-                      <ShoppingCartIcon
-                        className="h-6 w-6"
-                        aria-hidden="true"
-                      />
-                    </button>
+                    <Link to="/cart">
+                      <button
+                        type="button"
+                        className=" rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                      >
+                        <span className="sr-only">View notifications</span>
+                        <ShoppingCartIcon
+                          className="h-6 w-6"
+                          aria-hidden="true"
+                        />
+                      </button>
                     </Link>
-                    <span className="inline-flex items-center rounded-md bg-red-50 mb-5 -ml-3 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
-                      5
-                    </span>
+                    {items.length > 0 && (
+                      <span className="inline-flex items-center rounded-md bg-red-50 mb-5 -ml-3 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
+                        {items.length}
+                      </span>
+                    )}
                     {/* Profile dropdown */}
                     <Menu as="div" className="relative ml-3">
                       <div>
@@ -106,7 +112,7 @@ const Navbar = ({ children }) => {
                             <Menu.Item key={item.name}>
                               {({ active }) => (
                                 <Link
-                                to={item.link}
+                                  to={item.link}
                                   className={classNames(
                                     active ? "bg-gray-100" : "",
                                     "block px-4 py-2 text-sm text-gray-700"
@@ -173,17 +179,22 @@ const Navbar = ({ children }) => {
                       {user.email}
                     </div>
                   </div>
-                  <Link to='/cart'>
-                  <button
-                    type="button"
-                    className=" ml-auto flex-shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                  >
-                    <ShoppingCartIcon className="h-6 w-6" aria-hidden="true" />
-                  </button>
+                  <Link to="/cart">
+                    <button
+                      type="button"
+                      className=" ml-auto flex-shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                    >
+                      <ShoppingCartIcon
+                        className="h-6 w-6"
+                        aria-hidden="true"
+                      />
+                    </button>
                   </Link>
-                  <span className="inline-flex items-center rounded-md bg-red-50 mb-7 -ml-3 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
-                    3
-                  </span>
+                  {items.length > 0 && (
+                    <span className="inline-flex items-center rounded-md bg-red-50 mb-7 -ml-3 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
+                      {items.length}
+                    </span>
+                  )}
                 </div>
                 <div className="mt-3 space-y-1 px-2">
                   {userNavigation.map((item) => (

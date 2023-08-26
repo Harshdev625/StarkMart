@@ -1,12 +1,12 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
-import {  checkUserAsync,selectError,selectLoggedInUser } from "../authSlice";
-import { Link,Navigate } from 'react-router-dom';
+import { checkUserAsync, selectError, selectLoggedInUser } from "../authSlice";
+import { Link, Navigate } from "react-router-dom";
 export default function Login() {
   const dispatch = useDispatch();
-  const error = useSelector(selectError)
-  const user = useSelector(selectLoggedInUser)
+  const error = useSelector(selectError);
+  const user = useSelector(selectLoggedInUser);
   const {
     register,
     handleSubmit,
@@ -15,8 +15,8 @@ export default function Login() {
   console.log(errors);
   return (
     <>
-    {user && <Navigate to='/' replace={true}></Navigate>}
-    <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+      {user && <Navigate to="/" replace={true}></Navigate>}
+      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
             className="mx-auto h-10 w-auto"
@@ -29,16 +29,23 @@ export default function Login() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form  noValidate className="space-y-6" 
-          onSubmit={handleSubmit((data) => {
-            dispatch(
-              checkUserAsync({ email: data.email, password: data.password })
-            );
-            console.log(data);
-          })}
-          action="#" method="POST">
+          <form
+            noValidate
+            className="space-y-6"
+            onSubmit={handleSubmit((data) => {
+              dispatch(
+                checkUserAsync({ email: data.email, password: data.password })
+              );
+              console.log(data);
+            })}
+            action="#"
+            method="POST"
+          >
             <div>
-              <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
                 Email address
               </label>
               <div className="mt-2">
@@ -59,16 +66,21 @@ export default function Login() {
                   <p className="text-red-500">{errors.email.message}</p>
                 )}
               </div>
-              
             </div>
 
             <div>
               <div className="flex items-center justify-between">
-                <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
                   Password
                 </label>
                 <div className="text-sm">
-                  <a href="/" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                  <a
+                    href="/"
+                    className="font-semibold text-indigo-600 hover:text-indigo-500"
+                  >
                     Forgot password?
                   </a>
                 </div>
@@ -86,9 +98,7 @@ export default function Login() {
                   <p className="text-red-500">{errors.password.message}</p>
                 )}
               </div>
-              {error && (
-                  <p className="text-red-500">{error.message}</p>
-                )}
+              {error && <p className="text-red-500">{error.message}</p>}
             </div>
 
             <div>
@@ -102,14 +112,16 @@ export default function Login() {
           </form>
 
           <p className="mt-10 text-center text-sm text-gray-500">
-            Not a member?{' '}
-            <Link to='/signup' className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+            Not a member?{" "}
+            <Link
+              to="/signup"
+              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+            >
               Create an Account
             </Link>
           </p>
         </div>
       </div>
-      </>
+    </>
   );
 }
- 
