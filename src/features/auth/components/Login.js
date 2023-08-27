@@ -38,8 +38,6 @@ export default function Login() {
               );
               console.log(data);
             })}
-            action="#"
-            method="POST"
           >
             <div>
               <label
