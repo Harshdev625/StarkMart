@@ -4,7 +4,7 @@ import UserOrders from '../features/user/components/UserOrders'
 const UserOrdersPage = () => {
   return (
     <Navbar>
-        <h1 classNmae='mx-auto text-2xl'>My Orders</h1>
+        <h1 className='mx-auto text-2xl'>My Orders</h1>
       <UserOrders></UserOrders>
     </Navbar>
   )

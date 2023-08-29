@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchLoggedInUserOrdersAsync, selectUserOrder } from "../userSlice";
-import { selectLoggedInUser } from "../../auth/authSlice";
+import { selectUserInfo } from "../userSlice";
+
 const UserOrders = () => {
   const dispatch = useDispatch();
-  const user = useSelector(selectLoggedInUser);
+  const user = useSelector(selectUserInfo);
   const orders = useSelector(selectUserOrder);
   console.log(orders);
   useEffect(() => {
@@ -20,7 +20,7 @@ const UserOrders = () => {
               <h1 className="text-4xl mb-3 font-bold tracking-tight text-gray-900">
                 Order # {order.id}
               </h1>
-              <h3 className="text-4xl mb-3 font-bold tracking-tight text-red-900">
+              <h3 className="text-xl mb-3 font-bold tracking-tight text-red-900">
                 Order Status : {order.status}
               </h3>
               <div className="flow-root">
@@ -67,7 +67,7 @@ const UserOrders = () => {
             <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
               <div className="flex justify-between text-base my-2 font-medium text-gray-900">
                 <p>Total Items in Cart</p>
-                <p>{order.TotalQuantity}</p>
+                <p>{order.TotalQuantity} Items</p>
               </div>
               <div className="flex justify-between text-base my-2 font-medium text-gray-900">
                 <p>Total Amount</p>

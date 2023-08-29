@@ -8,15 +8,12 @@ import {
   updateCartAsync,
   deleteItemfromCartAsync,
 } from "../features/Cart/cartSlice";
-import {
-  selectLoggedInUser,
-  updateUserAsync,
-} from "../features/auth/authSlice";
+import { updateUserAsync } from "../features/auth/authSlice";
 import {
   createOrderAsync,
   selectCurrentOrder,
 } from "../features/Order/orderSlice";
-
+import { selectUserInfo } from "../features/user/userSlice";
 function Checkout() {
   const {
     register,
@@ -28,7 +25,7 @@ function Checkout() {
   console.log(errors);
 
   const dispatch = useDispatch();
-  const user = useSelector(selectLoggedInUser);
+  const user = useSelector(selectUserInfo);
   const items = useSelector(selectItems);
   const currentorder = useSelector(selectCurrentOrder);
   const [selectedAddress, setSelectedAddress] = useState(null);
@@ -451,7 +448,7 @@ function Checkout() {
               <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                 <div className="flex justify-between text-base my-2 font-medium text-gray-900">
                   <p>Total Items in Cart</p>
-                  <p>{TotalQuantity}</p>
+                  <p>{TotalQuantity} Items</p>
                 </div>
                 <div className="flex justify-between text-base my-2 font-medium text-gray-900">
                   <p>Total Amount</p>
