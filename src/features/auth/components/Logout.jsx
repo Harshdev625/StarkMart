@@ -8,6 +8,7 @@ const Logout = () => {
     const user = useSelector(selectLoggedInUser)
     useEffect(() => {
         dispatch(SignoutAsync())
+        // eslint-disable-next-line
     }, [])
 
     return (

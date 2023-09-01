@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { RadioGroup } from "@headlessui/react";
-import { selectProductById, fetchProductByIdAsync } from "../ProductSlice";
+import { selectProductById, fetchProductByIdAsync } from "../../product/ProductSlice";
 import { useParams } from "react-router-dom";
 import { selectLoggedInUser } from "../../auth/authSlice";
 import { addToCartAsync } from "../../Cart/cartSlice";
@@ -31,7 +31,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function ProductDetails() {
+export default function AdminProductDetail() {
   const dispatch = useDispatch();
   const user = useSelector(selectLoggedInUser);
   const [selectedColor, setSelectedColor] = useState(colors[0]);
@@ -41,8 +41,8 @@ export default function ProductDetails() {
   const handleCart = (e) => {
     e.preventDefault();
     console.log(user);
-    const newItem = { ...product, quantity: 1, user: user.id };
-    delete newItem["id"];
+    const newItem={ ...product, quantity: 1, user: user.id };
+    delete newItem['id']
     dispatch(addToCartAsync(newItem));
   };
   useEffect(() => {
@@ -149,7 +149,7 @@ export default function ProductDetails() {
                       <StarIcon
                         key={rating}
                         className={classNames(
-                          product.rating && product.rating.average > rating
+                          product.rating.average > rating
                             ? "text-gray-900"
                             : "text-gray-200",
                           "h-5 w-5 flex-shrink-0"
@@ -158,11 +158,9 @@ export default function ProductDetails() {
                       />
                     ))}
                   </div>
-                  {product.rating && (
-                    <p className="sr-only">
-                      {product.rating.average} out of 5 stars
-                    </p>
-                  )}
+                  <p className="sr-only">
+                    {product.rating.average} out of 5 stars
+                  </p>
                 </div>
               </div>
 
