@@ -27,7 +27,6 @@ export default function ForgotPassword() {
             noValidate
             className="space-y-6"
             onSubmit={handleSubmit((data) => {
-              
               console.log(data);
             })}
           >
@@ -69,7 +68,7 @@ export default function ForgotPassword() {
           </form>
 
           <p className="mt-10 text-center text-sm text-gray-500">
-            Return to {" "}
+            Return to{" "}
             <Link
               to="/login"
               className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"

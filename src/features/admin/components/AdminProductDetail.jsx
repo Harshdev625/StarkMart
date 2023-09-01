@@ -2,7 +2,10 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { RadioGroup } from "@headlessui/react";
-import { selectProductById, fetchProductByIdAsync } from "../../product/ProductSlice";
+import {
+  selectProductById,
+  fetchProductByIdAsync,
+} from "../../product/ProductSlice";
 import { useParams } from "react-router-dom";
 import { selectLoggedInUser } from "../../auth/authSlice";
 import { addToCartAsync } from "../../Cart/cartSlice";
@@ -41,8 +44,8 @@ export default function AdminProductDetail() {
   const handleCart = (e) => {
     e.preventDefault();
     console.log(user);
-    const newItem={ ...product, quantity: 1, user: user.id };
-    delete newItem['id']
+    const newItem = { ...product, quantity: 1, user: user.id };
+    delete newItem["id"];
     dispatch(addToCartAsync(newItem));
   };
   useEffect(() => {

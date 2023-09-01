@@ -4,7 +4,7 @@ import {
   fetchItemsByUserId,
   updateCart,
   deleteItemfromCart,
-  resetCart
+  resetCart,
 } from "./cartAPI";
 
 const initialState = {

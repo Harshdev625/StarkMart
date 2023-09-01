@@ -2,13 +2,13 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import {
+  clearSelectedProduct,
   fetchProductByIdAsync,
   selectBrands,
   selectCategories,
   selectProductById,
   createProductAsync,
   updateProductAsync,
-  clearSelectedProduct,
 } from "../../product/ProductSlice";
 import { Link, useParams } from "react-router-dom";
 
@@ -20,6 +20,7 @@ const ProductForm = () => {
     reset,
     formState: { errors },
   } = useForm();
+  console.log(errors);
   const params = useParams();
   const dispatch = useDispatch();
   const brands = useSelector(selectBrands);
@@ -28,9 +29,8 @@ const ProductForm = () => {
   useEffect(() => {
     if (params.id) {
       dispatch(fetchProductByIdAsync(params.id));
-    }
-    else{
-      dispatch(clearSelectedProduct())
+    } else {
+      dispatch(clearSelectedProduct());
     }
   }, [params.id, dispatch]);
 
@@ -51,11 +51,11 @@ const ProductForm = () => {
     }
   }, [selectedProduct, params.id, setValue]);
 
-  const handleDelete=()=>{
-    const product ={...selectedProduct }
-    product.deleted=true
-    dispatch(updateProductAsync(product))
-  }
+  const handleDelete = () => {
+    const product = { ...selectedProduct };
+    product.deleted = true;
+    dispatch(updateProductAsync(product));
+  };
   return (
     <form
       noValidate
@@ -77,16 +77,14 @@ const ProductForm = () => {
         product.stock = +product.stock;
         product.discountPercentage = +product.discountPercentage;
         console.log(product);
-        if(params.id){
-          product.id=params.id
+        if (params.id) {
+          product.id = params.id;
           product.rating = selectedProduct.rating || 0;
-          dispatch(updateProductAsync(product))
-          reset()
-        }
-        else{
-        dispatch(createProductAsync(product));
-        reset()
-
+          dispatch(updateProductAsync(product));
+          reset();
+        } else {
+          dispatch(createProductAsync(product));
+          reset();
         }
       })}
     >
@@ -447,12 +445,14 @@ const ProductForm = () => {
         >
           <Link to="/admin">Cancel</Link>
         </button>
-        {selectedProduct && <button
-          onClick={handleDelete}
-          className="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-        >
-          Delete
-        </button>}
+        {selectedProduct && (
+          <button
+            onClick={handleDelete}
+            className="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            Delete
+          </button>
+        )}
         <button
           type="submit"
           className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
