@@ -12,9 +12,9 @@ import { useSelector } from "react-redux";
 import { selectLoggedInUser } from "../auth/authSlice";
 
 const navigation = [
-  { name: "StarkMart", link: "#", user: true },
-  { name: "Team", link: "#", user: true },
-  { name: "Admin", link: "/admin", admin: true },
+  { name: "Products", link: "/", user: true },
+  { name: "Products", link: "/admin", admin: true },
+  { name: "Orders", link: "/admin/orders", admin: true },
 ];
 const userNavigation = [
   { name: "My Profile", link: "/profile" },
@@ -41,7 +41,7 @@ const Navbar = ({ children }) => {
                       <img
                         className="h-8 w-8"
                         src={StarkMart}
-                        alt="Your Company"
+                        alt="StarkMart"
                       />
                     </Link>
                   </div>

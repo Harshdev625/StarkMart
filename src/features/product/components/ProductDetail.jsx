@@ -2,10 +2,18 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { RadioGroup } from "@headlessui/react";
-import { selectProductById, fetchProductByIdAsync } from "../ProductSlice";
+import {
+  selectProductById,
+  fetchProductByIdAsync,
+  selectProductListStatus,
+} from "../ProductSlice";
 import { useParams } from "react-router-dom";
 import { selectLoggedInUser } from "../../auth/authSlice";
-import { addToCartAsync } from "../../Cart/cartSlice";
+import { addToCartAsync, selectItems } from "../../Cart/cartSlice";
+import { useAlert } from "react-alert";
+import { discountedPrice } from "../../../app/constants";
+import { ThreeCircles } from "react-loader-spinner";
+
 const colors = [
   { name: "White", class: "bg-white", selectedClass: "ring-gray-400" },
   { name: "Gray", class: "bg-gray-200", selectedClass: "ring-gray-400" },
@@ -36,21 +44,50 @@ export default function ProductDetails() {
   const user = useSelector(selectLoggedInUser);
   const [selectedColor, setSelectedColor] = useState(colors[0]);
   const [selectedSize, setSelectedSize] = useState(sizes[2]);
+  const status = useSelector(selectProductListStatus);
+  const items = useSelector(selectItems);
   const product = useSelector(selectProductById);
   const params = useParams();
+  const alert = useAlert();
+
   const handleCart = (e) => {
     e.preventDefault();
-    console.log(user);
-    const newItem = { ...product, quantity: 1, user: user.id };
-    delete newItem["id"];
-    dispatch(addToCartAsync(newItem));
+    if (items.findIndex((item) => item.productId === product.id) < 0) {
+      console.log({ items, product });
+      const newItem = {
+        ...product,
+        productId: product.id,
+        quantity: 1,
+        user: user.id,
+      };
+      delete newItem["id"];
+      dispatch(addToCartAsync(newItem));
+      alert.success("Item added to Cart");
+    } else {
+      alert.info("Item Already added");
+    }
   };
+
   useEffect(() => {
     dispatch(fetchProductByIdAsync(params.id));
   }, [dispatch, params.id]);
 
   return (
     <div className="bg-white">
+      {status === "loading" ? (
+        <ThreeCircles
+          height="100"
+          width="100"
+          color="#4fa94d"
+          wrapperStyle={{}}
+          wrapperClass=""
+          visible={true}
+          ariaLabel="three-circles-rotating"
+          outerCircleColor="#006699"
+          innerCircleColor="#6699CC"
+          middleCircleColor="#66CCCC"
+        />
+      ) : null}
       {product && (
         <div className="pt-6">
           <nav aria-label="Breadcrumb">
@@ -137,7 +174,7 @@ export default function ProductDetails() {
               <h2 className="sr-only">Product information</h2>
               <p className="text-3xl tracking-tight text-gray-900">
                 {" "}
-                ₹ {product.price}
+                ₹ {discountedPrice(product)}
               </p>
 
               {/* product.rating */}

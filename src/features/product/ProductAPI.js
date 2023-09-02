@@ -72,7 +72,7 @@ export function fetchProductByFilters({ filter, sort, pagination }) {
   }
 
   for (let key in pagination) {
-    queryString += `${key}=${pagination[key]}`;
+    queryString += `${key}=${pagination[key]}&`;
   }
 
   return new Promise(async (resolve) => {
@@ -80,7 +80,7 @@ export function fetchProductByFilters({ filter, sort, pagination }) {
       "http://localhost:8080/products?" + queryString
     );
     const data = await response.json();
-    const totalItems = await response.headers.get("X-Total-Count");
+    const totalItems = response.headers.get("X-Total-Count");
     resolve({ data: { products: data, totalItems: +totalItems } });
   });
 }

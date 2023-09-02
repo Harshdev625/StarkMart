@@ -3,6 +3,8 @@ import { Link, Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { selectLoggedInUser, createUserAsync } from "../authSlice";
 import { useSelector, useDispatch } from "react-redux";
+import StarkMart from "../../../Images/StarkMart.png";
+
 const SignUp = () => {
   const user = useSelector(selectLoggedInUser);
   const dispatch = useDispatch();
@@ -19,8 +21,8 @@ const SignUp = () => {
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
             className="mx-auto h-10 w-auto"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-            alt="Your Company"
+            src={StarkMart}
+            alt="StarkMart"
           />
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Create a New Account
