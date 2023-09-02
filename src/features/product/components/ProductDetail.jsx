@@ -10,9 +10,10 @@ import {
 import { useParams } from "react-router-dom";
 import { selectLoggedInUser } from "../../auth/authSlice";
 import { addToCartAsync, selectItems } from "../../Cart/cartSlice";
-import { useAlert } from "react-alert";
 import { discountedPrice } from "../../../app/constants";
 import { ThreeCircles } from "react-loader-spinner";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const colors = [
   { name: "White", class: "bg-white", selectedClass: "ring-gray-400" },
@@ -48,7 +49,6 @@ export default function ProductDetails() {
   const items = useSelector(selectItems);
   const product = useSelector(selectProductById);
   const params = useParams();
-  const alert = useAlert();
 
   const handleCart = (e) => {
     e.preventDefault();
@@ -62,9 +62,9 @@ export default function ProductDetails() {
       };
       delete newItem["id"];
       dispatch(addToCartAsync(newItem));
-      alert.success("Item added to Cart");
+      toast.success("Item added to Cart");
     } else {
-      alert.info("Item Already added");
+      toast.info("Item Already added");
     }
   };
 

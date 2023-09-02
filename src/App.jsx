@@ -23,13 +23,9 @@ import AdminHomePage from "./pages/AdminHomePage";
 import AdminProductDetailPage from "./pages/AdminProductDetailPage";
 import AdminProductFormPage from "./pages/AdminProductFormPage";
 import AdminOrdersPage from "./pages/AdminOrdersPage";
-import { positions, Provider } from "react-alert";
-import AlertTemplate from "react-alert-template-basic";
+import { createToast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const options = {
-  timeout: 5000,
-  position: positions.BOTTOM_LEFT,
-};
 
 const router = createBrowserRouter([
   {
@@ -151,9 +147,8 @@ function App() {
 
   return (
     <div className="App">
-      <Provider template={AlertTemplate} {...options}>
         <RouterProvider router={router} />
-      </Provider>
+        <ToastContainer position="top-center" theme="colored"/>
     </div>
   );
 }
