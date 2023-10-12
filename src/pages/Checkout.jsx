@@ -8,7 +8,7 @@ import {
   updateCartAsync,
   deleteItemfromCartAsync,
 } from "../features/Cart/cartSlice";
-import { updateUserAsync } from "../features/auth/authSlice";
+import { updateUserAsync } from "../features/user/userSlice";
 import {
   createOrderAsync,
   selectCurrentOrder,
@@ -44,15 +44,16 @@ function Checkout() {
       items,
       TotalAmount,
       TotalQuantity,
+      user:user.id,
       paymentMethod,
       selectedAddress,
       status: "pending",
     };
     dispatch(createOrderAsync(order));
   };
-
+  console.log(user.addresses && user.addresses[0])
   const TotalAmount = items.reduce((amount, b) => {
-    return amount + b.price * b.quantity;
+    return amount + b.product.price * b.quantity;
   }, 0);
   const TotalQuantity = items.reduce((qty, b) => {
     return qty + b.quantity;
@@ -60,7 +61,7 @@ function Checkout() {
   console.log(TotalAmount, TotalQuantity);
 
   const handleQuantity = (e, item) => {
-    dispatch(updateCartAsync({ ...item, quantity: +e.target.value }));
+    dispatch(updateCartAsync({ id:item.id, quantity: +e.target.value }));
   };
   const handleRemove = (e, id) => {
     console.log(id);
@@ -86,7 +87,7 @@ function Checkout() {
                 dispatch(
                   updateUserAsync({
                     ...user,
-                    addresses: [...user.addresses, data],
+                    addresses: [...(user.addresses || []), data],
                   })
                 );
                 reset();
@@ -305,6 +306,7 @@ function Checkout() {
                               value={index}
                               className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                             />
+                            {console.log(address)}
                             <div className="min-w-0 flex-auto">
                               <p className="text-sm font-semibold leading-6 text-gray-900">
                                 {address.name}
@@ -391,8 +393,8 @@ function Checkout() {
                       <li key={item.id} className="flex py-6">
                         <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                           <img
-                            src={item.thumbnail}
-                            alt={item.title}
+                            src={item.product.thumbnail}
+                            alt={item.product.title}
                             className="h-full w-full object-cover object-center"
                           />
                         </div>
@@ -401,12 +403,12 @@ function Checkout() {
                           <div>
                             <div className="flex justify-between text-base font-medium text-gray-900">
                               <h3>
-                                <a href={item.href}>{item.title}</a>
+                                <a href={item.product.id}>{item.product.title}</a>
                               </h3>
-                              <p className="ml-4">₹ {item.price}</p>
+                              <p className="ml-4">₹ {item.product.price}</p>
                             </div>
                             <p className="mt-1 text-sm text-gray-500">
-                              {item.brand}
+                              {item.product.brand}
                             </p>
                           </div>
                           <div className="flex flex-1 items-end justify-between text-sm">

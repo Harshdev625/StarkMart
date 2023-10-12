@@ -154,3 +154,5 @@ function App() {
 }
 
 export default App;
+
+// "start": "concurrently \"json-server --watch data.json --port 8080\" \"react-scripts start\"",

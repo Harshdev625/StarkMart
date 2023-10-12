@@ -14,7 +14,6 @@ export default function Login() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  console.log(errors);
   return (
     <>
       {user && <Navigate to="/" replace={true}></Navigate>}
@@ -36,7 +35,7 @@ export default function Login() {
             className="space-y-6"
             onSubmit={handleSubmit((data) => {
               dispatch(
-                checkUserAsync({ email: data.email, password: data.password })
+                checkUserAsync({ email: data.email, password: data.password})
               );
               console.log(data);
             })}

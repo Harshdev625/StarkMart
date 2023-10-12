@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import {
   clearSelectedProduct,
@@ -86,9 +87,11 @@ const ProductForm = () => {
             product.id = params.id;
             product.rating = selectedProduct.rating || 0;
             dispatch(updateProductAsync(product));
+            toast.success("Product Updated")
             reset();
           } else {
             dispatch(createProductAsync(product));
+            toast.success("Product Added")
             reset();
           }
         })}

@@ -52,15 +52,13 @@ export default function ProductDetails() {
 
   const handleCart = (e) => {
     e.preventDefault();
-    if (items.findIndex((item) => item.productId === product.id) < 0) {
+    if (items.findIndex((item) => item.product.id === product.id) < 0) {
       console.log({ items, product });
       const newItem = {
-        ...product,
-        productId: product.id,
+        product:product.id,
         quantity: 1,
         user: user.id,
       };
-      delete newItem["id"];
       dispatch(addToCartAsync(newItem));
       toast.success("Item added to Cart");
     } else {
@@ -217,9 +215,9 @@ export default function ProductDetails() {
                       Choose a color
                     </RadioGroup.Label>
                     <div className="flex items-center space-x-3">
-                      {colors.map((color) => (
+                      {colors.map((color,index) => (
                         <RadioGroup.Option
-                          key={color.name}
+                          key={index}
                           value={color}
                           className={({ active, checked }) =>
                             classNames(

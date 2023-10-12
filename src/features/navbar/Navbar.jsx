@@ -47,10 +47,10 @@ const Navbar = ({ children }) => {
                   </div>
                   <div className="hidden md:block">
                     <div className="ml-10 flex items-baseline space-x-4">
-                      {navigation.map((item) =>
+                      {navigation.map((item,index) =>
                         item[user.role] ? (
                           <Link
-                            key={item.name}
+                            key={index}
                             to={item.link}
                             className={classNames(
                               item.current
@@ -145,9 +145,9 @@ const Navbar = ({ children }) => {
 
             <Disclosure.Panel className="md:hidden">
               <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
-                {navigation.map((item) => (
+                {navigation.map((item,index) => (
                   <Disclosure.Button
-                    key={item.name}
+                    key={index}
                     as="a"
                     href={item.href}
                     className={classNames(
