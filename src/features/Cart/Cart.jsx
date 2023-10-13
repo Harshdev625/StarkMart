@@ -6,6 +6,7 @@ import {
   updateCartAsync,
   deleteItemfromCartAsync,
   selectCartStatus,
+  selectCartLoaded,
 } from "./cartSlice";
 import { discountedPrice } from "../../app/constants";
 import { ThreeCircles } from "react-loader-spinner";
@@ -15,6 +16,7 @@ export default function Cart() {
   const dispatch = useDispatch();
   const items = useSelector(selectItems);
   const status = useSelector(selectCartStatus);
+  const cartLoaded = useSelector(selectCartLoaded)
   const [openModal, setOpenModal] = useState(null);
 
   const TotalAmount = items.reduce(
@@ -39,7 +41,7 @@ export default function Cart() {
 
   return (
     <>
-      {items.length === 0 && <Navigate to="/" replace={true}></Navigate>}
+      {items.length === 0 &&  cartLoaded && <Navigate to="/" replace={true}></Navigate>}
       <div>
         <div className=" bg-white mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="border-t border-gray-200 px-4 py-6 sm:px-6">

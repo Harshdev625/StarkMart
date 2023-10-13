@@ -3,8 +3,7 @@ import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchItemsByUserIdAsync } from "./features/Cart/cartSlice";
-import { selectLoggedInUser } from "./features/auth/authSlice";
-import { fetchLoggedInUserAsync } from "./features/user/userSlice";
+import { checkAuthAsync, selectLoggedInUser, selectUserChecked } from './features/auth/authSlice';import { fetchLoggedInUserAsync } from "./features/user/userSlice";
 import Home from "./pages/Home";
 import Logout from "./features/auth/components/Logout";
 import LoginPage from "./pages/LoginPage";
@@ -137,7 +136,12 @@ const router = createBrowserRouter([
 function App() {
   const dispatch = useDispatch();
   const user = useSelector(selectLoggedInUser);
-  // console.log(user)
+  const userChecked = useSelector(selectUserChecked);
+
+  useEffect(()=>{
+    dispatch(checkAuthAsync())
+  },[dispatch])
+
   useEffect(() => {
     if (user) {
       dispatch(fetchItemsByUserIdAsync());
@@ -147,8 +151,9 @@ function App() {
 
   return (
     <div className="App">
-        <RouterProvider router={router} />
+        {userChecked && <RouterProvider router={router} >
         <ToastContainer position="top-center" theme="colored"/>
+        </RouterProvider>}
     </div>
   );
 }
