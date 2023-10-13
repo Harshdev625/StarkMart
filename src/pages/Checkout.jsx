@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-
+import {discountedPrice } from "../app/constants";
 import {
   selectItems,
   updateCartAsync,
@@ -53,7 +53,7 @@ function Checkout() {
   };
   console.log(user.addresses && user.addresses[0])
   const TotalAmount = items.reduce((amount, b) => {
-    return amount + b.product.price * b.quantity;
+    return amount + discountedPrice(b.product) * b.quantity;
   }, 0);
   const TotalQuantity = items.reduce((qty, b) => {
     return qty + b.quantity;
@@ -71,9 +71,15 @@ function Checkout() {
   return (
     <>
       {items.length === 0 && <Navigate to="/" replace={true}></Navigate>}
-      {currentorder && (
+      {currentorder &&  currentorder.paymentMethod ==='cash' && (
         <Navigate
           to={`/order-success/${currentorder.id}`}
+          replace={true}
+        ></Navigate>
+      )}
+      {currentorder &&  currentorder.paymentMethod ==='card' && (
+        <Navigate
+          to={`/stripe-checkout/`}
           replace={true}
         ></Navigate>
       )}
@@ -405,7 +411,7 @@ function Checkout() {
                               <h3>
                                 <a href={item.product.id}>{item.product.title}</a>
                               </h3>
-                              <p className="ml-4">₹ {item.product.price}</p>
+                              <p className="ml-4">₹ {discountedPrice(item.product)}</p>
                             </div>
                             <p className="mt-1 text-sm text-gray-500">
                               {item.product.brand}

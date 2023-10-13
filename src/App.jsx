@@ -3,7 +3,12 @@ import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchItemsByUserIdAsync } from "./features/Cart/cartSlice";
-import { checkAuthAsync, selectLoggedInUser, selectUserChecked } from './features/auth/authSlice';import { fetchLoggedInUserAsync } from "./features/user/userSlice";
+import {
+  checkAuthAsync,
+  selectLoggedInUser,
+  selectUserChecked,
+} from "./features/auth/authSlice";
+import { fetchLoggedInUserAsync } from "./features/user/userSlice";
 import Home from "./pages/Home";
 import Logout from "./features/auth/components/Logout";
 import LoginPage from "./pages/LoginPage";
@@ -22,9 +27,9 @@ import AdminHomePage from "./pages/AdminHomePage";
 import AdminProductDetailPage from "./pages/AdminProductDetailPage";
 import AdminProductFormPage from "./pages/AdminProductFormPage";
 import AdminOrdersPage from "./pages/AdminOrdersPage";
+import StripeCheckout from "./pages/StripeCheckout";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 
 const router = createBrowserRouter([
   {
@@ -116,6 +121,14 @@ const router = createBrowserRouter([
     element: <UserOrdersPage></UserOrdersPage>,
   },
   {
+    path: "/stripe-checkout/",
+    element: (
+      <Protected>
+        <StripeCheckout></StripeCheckout>
+      </Protected>
+    ),
+  },
+  {
     path: "/profile",
     element: <UserProfilePage></UserProfilePage>,
   },
@@ -138,9 +151,9 @@ function App() {
   const user = useSelector(selectLoggedInUser);
   const userChecked = useSelector(selectUserChecked);
 
-  useEffect(()=>{
-    dispatch(checkAuthAsync())
-  },[dispatch])
+  useEffect(() => {
+    dispatch(checkAuthAsync());
+  }, [dispatch]);
 
   useEffect(() => {
     if (user) {
@@ -151,9 +164,11 @@ function App() {
 
   return (
     <div className="App">
-        {userChecked && <RouterProvider router={router} >
-        <ToastContainer position="top-center" theme="colored"/>
-        </RouterProvider>}
+      {userChecked && (
+        <RouterProvider router={router}>
+          <ToastContainer position="top-center" theme="colored" />
+        </RouterProvider>
+      )}
     </div>
   );
 }
