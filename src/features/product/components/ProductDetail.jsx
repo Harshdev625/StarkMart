@@ -8,7 +8,6 @@ import {
   selectProductListStatus,
 } from "../ProductSlice";
 import { useParams } from "react-router-dom";
-import { selectLoggedInUser } from "../../auth/authSlice";
 import { addToCartAsync, selectItems } from "../../Cart/cartSlice";
 import { discountedPrice } from "../../../app/constants";
 import { ThreeCircles } from "react-loader-spinner";
@@ -42,7 +41,6 @@ function classNames(...classes) {
 
 export default function ProductDetails() {
   const dispatch = useDispatch();
-  const user = useSelector(selectLoggedInUser);
   const [selectedColor, setSelectedColor] = useState(colors[0]);
   const [selectedSize, setSelectedSize] = useState(sizes[2]);
   const status = useSelector(selectProductListStatus);
@@ -57,7 +55,6 @@ export default function ProductDetails() {
       const newItem = {
         product:product.id,
         quantity: 1,
-        user: user.id,
       };
       dispatch(addToCartAsync(newItem));
       toast.success("Item added to Cart");

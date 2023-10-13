@@ -1,16 +1,16 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchLoggedInUserOrdersAsync, selectUserOrder } from "../userSlice";
-import { selectUserInfo } from "../userSlice";
+import { fetchLoggedInUserOrdersAsync, selectUserInfoStatus, selectUserOrder } from "../userSlice";
+import { ThreeCircles } from "react-loader-spinner";
 
 const UserOrders = () => {
   const dispatch = useDispatch();
-  const userInfo = useSelector(selectUserInfo);
   const orders = useSelector(selectUserOrder);
+  const status= useSelector(selectUserInfoStatus)
   console.log(orders);
   useEffect(() => {
-    dispatch(fetchLoggedInUserOrdersAsync(userInfo.id));
-  }, [dispatch, userInfo]);
+    dispatch(fetchLoggedInUserOrdersAsync());
+  }, [dispatch]);
   return (
     <div>
       {orders && orders.map((order) => (
@@ -103,6 +103,20 @@ const UserOrders = () => {
           </div>
         </div>
       ))}
+      {status === "loading" ? (
+                <ThreeCircles
+                  height="100"
+                  width="100"
+                  color="#4fa94d"
+                  wrapperStyle={{}}
+                  wrapperClass=""
+                  visible={true}
+                  ariaLabel="three-circles-rotating"
+                  outerCircleColor="#006699"
+                  innerCircleColor="#6699CC"
+                  middleCircleColor="#66CCCC"
+                />
+              ) : null}
     </div>
   );
 };
