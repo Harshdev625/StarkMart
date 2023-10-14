@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchLoggedInUserOrdersAsync, selectUserInfoStatus, selectUserOrder } from "../userSlice";
 import { ThreeCircles } from "react-loader-spinner";
-
+import { discountedPrice } from "../../../app/constants";
 const UserOrders = () => {
   const dispatch = useDispatch();
   const orders = useSelector(selectUserOrder);
@@ -41,7 +41,7 @@ const UserOrders = () => {
                             <h3>
                               <a href={item.product.id}>{item.product.title}</a>
                             </h3>
-                            <p className="ml-4">₹ {item.product.price}</p>
+                            <p className="ml-4">₹ {discountedPrice(item.product)}</p>
                           </div>
                           <p className="mt-1 text-sm text-gray-500">
                             {item.product.brand}
