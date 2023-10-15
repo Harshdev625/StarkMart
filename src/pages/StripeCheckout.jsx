@@ -23,6 +23,7 @@ export default function StripeCheckout() {
     })
       .then((res) => res.json())
       .then((data) => setClientSecret(data.clientSecret));
+      // eslint-disable-next-line
   }, []);
 
   const appearance = {

@@ -14,6 +14,7 @@ import {
   ArrowDownIcon,
 } from "@heroicons/react/24/outline";
 import Pagination from "../../common/Pagination";
+
 const AdminOrders = () => {
   const [page, SetPage] = useState(1);
   const dispatch = useDispatch();
@@ -57,6 +58,12 @@ const AdminOrders = () => {
 
   const handleOrderStatus = (e, order) => {
     const updatedOrder = { ...order, status: e.target.value };
+    dispatch(updateOrderAsync(updatedOrder));
+    seteditableOrderId(-1);
+  };
+
+  const handleOrderPaymentStatus = (e, order) => {
+    const updatedOrder = { ...order, paymentStatus: e.target.value };
     dispatch(updateOrderAsync(updatedOrder));
     seteditableOrderId(-1);
   };
@@ -109,9 +116,11 @@ const AdminOrders = () => {
                         <ArrowDownIcon className="w-4 h-4 inline"></ArrowDownIcon>
                       ))}
                   </th>
-                  <th className="py-3 px-6 text-center">Shipping Address</th>
-                  <th className="py-3 px-6 text-center">Status</th>
-                  <th className="py-3 px-6 text-center">Actions</th>
+                  <th className="py-3 px-0 text-center">Shipping Address</th>
+                  <th className="py-3 px-0 text-center">Order Status</th>
+                  <th className="py-3 px-0 text-center">Payment Method</th>
+                  <th className="py-3 px-0 text-center">Payment Status</th>
+                  <th className="py-3 px-0 text-center">Actions</th>
                 </tr>
               </thead>
               <tbody className="text-gray-600 text-sm font-light">
@@ -177,6 +186,30 @@ const AdminOrders = () => {
                           )} py-1 px-3 rounded-full text-xm`}
                         >
                           {order.status}
+                        </span>
+                      )}
+                    </td>
+                    <td className="py-3 px-0 text-center">
+                      <div className="flex items-center justify-center">
+                        {order.paymentMethod}
+                      </div>
+                    </td>
+
+                    <td className="py-3 px-0 text-center">
+                      {order.id === editableOrderId ? (
+                        <select
+                          onChange={(e) => handleOrderPaymentStatus(e, order)}
+                        >
+                          <option value="pending">Pending</option>
+                          <option value="received">Received</option>
+                        </select>
+                      ) : (
+                        <span
+                          className={`${chooseColor(
+                            order.paymentStatus
+                          )} py-1 px-3 rounded-full text-xs`}
+                        >
+                          {order.paymentStatus}
                         </span>
                       )}
                     </td>

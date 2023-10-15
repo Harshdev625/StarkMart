@@ -164,11 +164,10 @@ function App() {
 
   return (
     <div className="App">
-      {userChecked && (
-        <RouterProvider router={router}>
-          <ToastContainer position="top-center" theme="colored" />
-        </RouterProvider>
+       {userChecked && (
+        <RouterProvider router={router}/>
       )}
+      <ToastContainer position="top-center" theme="colored" />
     </div>
   );
 }
