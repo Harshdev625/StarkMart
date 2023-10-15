@@ -60,7 +60,7 @@ export default function CheckoutForm() {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: `/order-success/${currentorder.id}`,
+        return_url: `https://starkmart.vercel.app/order-success/${currentorder.id}`,
       },
     });
 

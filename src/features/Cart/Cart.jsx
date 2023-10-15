@@ -80,7 +80,7 @@ export default function Cart() {
                           <h3>
                             <a href={item.product.id}>{item.product.title}</a>
                           </h3>
-                          {discountedPrice(item.product)}
+                          ₹{discountedPrice(item.product)}
                         </div>
                         <p className="mt-1 text-sm text-gray-500">
                           {item.product.brand}
