@@ -28,6 +28,7 @@ import AdminProductDetailPage from "./pages/AdminProductDetailPage";
 import AdminProductFormPage from "./pages/AdminProductFormPage";
 import AdminOrdersPage from "./pages/AdminOrdersPage";
 import StripeCheckout from "./pages/StripeCheckout";
+import ResetPasswordPage from './pages/ResetPasswordPage';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -137,8 +138,12 @@ const router = createBrowserRouter([
     element: <Logout></Logout>,
   },
   {
-    path: "/password-reset",
+    path: '/forgot-password',
     element: <ForgotPasswordPage></ForgotPasswordPage>,
+  },
+  {
+    path: '/reset-password',
+    element: <ResetPasswordPage></ResetPasswordPage>,
   },
   {
     path: "*",
