@@ -5,34 +5,45 @@ import "../Stripe.css";
 import CheckoutForm from "./CheckoutForm";
 import { useSelector } from "react-redux";
 import { selectCurrentOrder } from "../features/Order/orderSlice";
+import { selectUserInfo } from "../features/user/userSlice";
 
-// Make sure to call loadStripe outside of a component’s render to avoid
-// recreating the Stripe object on every render.
-// This is your test publishable API key.
 const stripePromise = loadStripe("pk_test_51O0lNOSHkYgXgY638B2cLcdDuyAWz8HmmWHqOG7K8RPy32HTPLqK9hq5xWIdhTTO4vSF5NPEHjjhQpJA2Ma3nBBA00Z3jeaKdQ");
 
 export default function StripeCheckout() {
   const [clientSecret, setClientSecret] = useState("");
-  const currentorder= useSelector(selectCurrentOrder)
+  const currentorder = useSelector(selectCurrentOrder);
+  const userInfo = useSelector(selectUserInfo);
+  const primaryAddress = userInfo?.addresses?.[0];
+
   useEffect(() => {
-    // Create PaymentIntent as soon as the page loads
+    if (!currentorder || !primaryAddress) return;
+
     fetch("/create-payment-intent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ TotalAmount: currentorder.TotalAmount, orderId:currentorder.id }),
+      body: JSON.stringify({
+        TotalAmount: currentorder.TotalAmount,
+        orderId: currentorder.id,
+        customerDetails: {
+          name: primaryAddress?.name,
+          email: primaryAddress?.email,
+          phone: primaryAddress?.phone,
+          address: {
+            line1: primaryAddress?.street,
+            city: primaryAddress?.city,
+            state: primaryAddress?.state,
+            postal_code: primaryAddress?.pincode,
+            country: "IN"
+          }
+        }
+      }),
     })
       .then((res) => res.json())
       .then((data) => setClientSecret(data.clientSecret));
-      // eslint-disable-next-line
-  }, []);
+  }, [currentorder, primaryAddress]);
 
-  const appearance = {
-    theme: 'stripe',
-  };
-  const options = {
-    clientSecret,
-    appearance,
-  };
+  const appearance = { theme: "stripe" };
+  const options = { clientSecret, appearance };
 
   return (
     <div className="Stripe">

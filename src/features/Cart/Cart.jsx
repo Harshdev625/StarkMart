@@ -15,6 +15,7 @@ import Modal from "../common/Modal";
 export default function Cart() {
   const dispatch = useDispatch();
   const items = useSelector(selectItems);
+  console.log(items)
   const status = useSelector(selectCartStatus);
   const cartLoaded = useSelector(selectCartLoaded)
   const [openModal, setOpenModal] = useState(null);
@@ -149,7 +150,7 @@ export default function Cart() {
             </p>
             <div className="mt-6">
               <Link
-                to="/checkout "
+                to="/checkout"
                 className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
               >
                 Checkout

@@ -27,6 +27,7 @@ export const createUserAsync = createAsyncThunk(
 export const loginUserAsync = createAsyncThunk(
   "user/loginUser",
   async (loginInfo, { rejectWithValue }) => {
+    console.log(loginInfo);
     try {
       const response = await loginUser(loginInfo);
       return response.data;

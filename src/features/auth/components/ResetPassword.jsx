@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import {useDispatch, useSelector} from 'react-redux';
 import { resetPasswordAsync, selectError, selectPasswordReset } from '../authSlice';
+import StarkMart from "../../../Images/StarkMart.png";
 
 export default function ResetPassword() {
 
@@ -27,8 +28,8 @@ export default function ResetPassword() {
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
             className="mx-auto h-10 w-auto"
-            src="/ecommerce.png"
-            alt="Your Company"
+            src={StarkMart}
+            alt="Starkmart"
           />
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Enter New Password

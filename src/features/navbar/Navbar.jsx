@@ -157,7 +157,7 @@ const Navbar = ({ children }) => {
                       <Disclosure.Button
                         key={index}
                         as="a"
-                        href={item.href}
+                        to={item.href}
                         className={classNames(
                           item.current
                             ? "bg-gray-900 text-white"
