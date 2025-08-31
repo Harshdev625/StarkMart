@@ -1,46 +1,88 @@
-# Getting Started with Create React App and Redux
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+# StarkMart Frontend
 
-## Available Scripts
+This is the frontend for StarkMart, a modern e-commerce web application. Built with React, Redux Toolkit, and Tailwind CSS, it provides a seamless shopping experience with authentication, product browsing, cart, checkout, and Stripe payments.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Modern, responsive UI with Tailwind CSS
+- State management with Redux Toolkit
+- Authentication and protected routes
+- Product listing, filtering, and details
+- Shopping cart and checkout flow
+- Stripe payment integration
+- Admin dashboard for managing products, orders, and users
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## Tech Stack
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- React.js (Create React App)
+- Redux Toolkit
+- React Router
+- Tailwind CSS
+- Stripe.js
+- React Toastify
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Getting Started
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Prerequisites
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Node.js (v16+ recommended)
+- npm or yarn
 
-### `npm run eject`
+### Setup
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+1. Navigate to the frontend folder:
+	```
+	cd Frontend
+	```
+2. Install dependencies:
+	```
+	npm install
+	```
+3. Start the React app:
+	```
+	npm start
+	```
+	The app will run on `http://localhost:3000` and proxy API requests to the backend.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Scripts
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- `npm start` — Start React development server
+- `npm run build` — Build for production
+- `npm test` — Run tests
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Folder Structure
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+src/
+  app/            # Redux store, constants
+  features/       # Redux slices & API logic (auth, cart, product, order, user)
+  pages/          # Main pages (Home, Login, Cart, Checkout, etc.)
+  common/         # Shared UI components
+  navbar/         # Navigation bar
+  Images/         # Static images
+public/           # Static files
+tailwind.config.js
+```
+
+---
+
+## API Integration
+
+The frontend expects the backend API to be running (see backend repo for setup). API endpoints are proxied via `http://localhost:8080` by default.
+
+---
+
+## License
+
+This project is licensed under the ISC License.
